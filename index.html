@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cricket Crazz-e</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* Header */
+    header {
+      background: #20b73c;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+    }
+    header h1 {
+      font-size: 2.5em;
+    }
+    /* Full-width Carousel */
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      position: relative;
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+    .slide img {
+      width: 100%;
+      height: 500px; /* fixed height for desktop, can adjust in media query */
+      object-fit: cover;
+      display: block;
+    }
+    /* Overlay caption styling */
+    .overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 4px;
+      text-align: center;
+      color: #fff;
+    }
+    .overlay h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .overlay p {
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+    /* Carousel Controls */
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    .prev {
+      left: 20px;
+    }
+    .next {
+      right: 20px;
+    }
+    .prev:hover,
+    .next:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    /* Dots Navigation */
+    .dots {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+    .dot {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin: 0 5px;
+      background: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .dot.active {
+      background: #717171;
+    }
+    /* Articles Section with alternating layout */
+    .articles {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    /* Make the whole article clickable */
+    .article-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .article {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      gap: 20px;
+    }
+    .article img {
+      width: 45%;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .article .text {
+      width: 55%;
+    }
+    .article .text h2 {
+      margin-bottom: 10px;
+      font-size: 1.8em;
+    }
+    .article .text p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      /* Carousel Adjustments */
+      .carousel {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto; 
+      }
+      .slides {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+      .slide {
+        position: relative;
+        min-width: 100%;
+        max-width: 100%;
+        flex-shrink: 0;
+      }
+      .slide img {
+        width: 100%;
+        height: 300px; /* Adjust for tablet-size screens */
+        object-fit: cover;
+        display: block;
+      }
+      .overlay h2 {
+        font-size: 1.6em;
+      }
+      .overlay p {
+        font-size: 1em;
+      }
+      
+      /* Articles: Force Vertical Stacking */
+      .article {
+        flex-direction: column;
+      }
+      .articles > a .article {
+        flex-direction: column !important;
+      }
+      .articles > a .article img,
+      .articles > a .article .text {
+        width: 100% !important;
+      }
+      .article img,
+      .article .text {
+        width: 100%;
+      }
+    }
+    @media (max-width: 480px) {
+      /* Carousel Adjustments for Very Small Screens */
+      .carousel {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto; 
+      }
+      .slides {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+      .slide {
+        position: relative;
+        min-width: 100%;
+        max-width: 100%;
+        flex-shrink: 0;
+      }
+      .slide img {
+        width: 100%;
+        height: 250px; /* Further reduced for small phones */
+        object-fit: cover;
+        display: block;
+      }
+      .overlay {
+        padding: 15px;
+      }
+      .overlay h2 {
+        font-size: 1.4em;
+      }
+      .overlay p {
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+      
+      /* Articles for Small Phones */
+      .articles {
+        padding: 0 10px;
+      }
+      .article {
+        padding: 15px;
+        gap: 15px;
+        flex-direction: column !important;
+      }
+      .article .text h2 {
+        font-size: 1.6em;
+      }
+      .article .text p {
+        font-size: 1em;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Cricket Crazz-e</h1>
+  </header>
+  
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="slides">
+      <!-- Slide 1: Tournaments -->
+      <div class="slide">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRo3LuD9StQIg0yCw8sfNRTVzqT6GWga9zJQ&s"
+          alt="Tournaments"
+        />
+        <div class="overlay">
+          <h2>Tournaments</h2>
+          <p>
+            Discover the thrill of international cricket tournaments.<br>
+            High-stakes matches, prestigious trophies, and global rivalries
+            ignite the passion of millions.
+          </p>
+        </div>
+      </div>
+      <!-- Slide 2: Cricket Formats -->
+      <div class="slide">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0IHB_u7e2pAudHCKD4GnCdc2Ap7qSWehm9g&s"
+          alt="Cricket Formats"
+        />
+        <div class="overlay">
+          <h2>Cricket Formats</h2>
+          <p>
+            Explore the diverse formats of the game—from timeless Test matches 
+            to explosive T20s—each offering a unique flavor of cricketing drama.
+          </p>
+        </div>
+      </div>
+      <!-- Slide 3: Teams -->
+      <div class="slide">
+        <img
+          src="https://crictoday.com/wp-content/uploads/2023/01/592590f4-63ea-11e8-a998-12ee0acfa260.jpg"
+          alt="Teams"
+        />
+        <div class="overlay">
+          <h2>Teams</h2>
+          <p>
+            Get to know the powerhouse teams that define modern cricket.<br>
+            Their strategies, star players, and unforgettable performances captivate fans worldwide.
+          </p>
+        </div>
+      </div>
+      <!-- Slide 4: History -->
+      <div class="slide">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0278/4565/6649/files/WhatsApp_Image_2023-08-28_at_20.21.16_4.webp?v=1693235800"
+          alt="History"
+        />
+        <div class="overlay">
+          <h2>History</h2>
+          <p>
+            Journey through cricket’s rich past, from its origins to iconic moments<br>
+            that have shaped the sport over the decades.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Carousel controls -->
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    <!-- Dots navigation -->
+    <div class="dots">
+      <span class="dot active" onclick="currentSlide(0)"></span>
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+  </div>
+  
+  <!-- Articles Section -->
+  <div class="articles">
+    <!-- Article 1: Tournaments -->
+    <a href="tournaments.html" class="article-link">
+      <div class="article">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRo3LuD9StQIg0yCw8sfNRTVzqT6GWga9zJQ&s"
+          alt="Tournaments"
+        />
+        <div class="text">
+          <h2>Tournaments</h2>
+          <p>
+            Cricket tournaments are the zenith of competitive spirit in the sport. 
+            Experience electrifying atmospheres, fierce rivalries, and world-class performances as the best teams battle for glory.
+          </p>
+        </div>
+      </div>
+    </a>
+    <!-- Article 2: Cricket Formats -->
+    <a href="formats.html" class="article-link">
+      <div class="article">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0IHB_u7e2pAudHCKD4GnCdc2Ap7qSWehm9g&s"
+          alt="Cricket Formats"
+        />
+        <div class="text">
+          <h2>Cricket Formats</h2>
+          <p>
+            From the enduring Test matches to the rapid-fire T20 games, cricket’s formats cater to every fan’s taste. 
+            Dive into the unique rules, strategies, and narratives that each format brings to the field.
+          </p>
+        </div>
+      </div>
+    </a>
+    <!-- Article 3: Teams -->
+    <a href="teams.html" class="article-link">
+      <div class="article">
+        <img
+          src="https://crictoday.com/wp-content/uploads/2023/01/592590f4-63ea-11e8-a998-12ee0acfa260.jpg"
+          alt="Teams"
+        />
+        <div class="text">
+          <h2>Teams</h2>
+          <p>
+            Cricket teams represent more than just a collection of players – they are a symbol of national pride and passion. 
+            Explore team dynamics, legendary line-ups, and the stories behind today's cricketing giants.
+          </p>
+        </div>
+      </div>
+    </a>
+    <!-- Article 4: History -->
+    <a href="history.html" class="article-link">
+      <div class="article">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0278/4565/6649/files/WhatsApp_Image_2023-08-28_at_20.21.16_4.webp?v=1693235800"
+          alt="History"
+        />
+        <div class="text">
+          <h2>History</h2>
+          <p>
+            Cricket’s long and storied history is filled with memorable moments and trailblazing legends. 
+            Uncover the evolution of the sport, its cultural impact, and the milestones that have defined cricket.
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Cricket Crazz-e. All rights reserved.</p>
+  </footer>
+  
+  <!-- JavaScript for Carousel -->
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slides .slide");
+    const dots = document.querySelectorAll(".dot");
+    const totalSlides = slides.length;
+    
+    function showSlide(index) {
+      if (index >= totalSlides) {
+        slideIndex = 0;
+      } else if (index < 0) {
+        slideIndex = totalSlides - 1;
+      } else {
+        slideIndex = index;
+      }
+      const offset = -slideIndex * 100;
+      document.querySelector(".slides").style.transform = "translateX(" + offset + "%)";
+      updateDots();
+    }
+    
+    function updateDots() {
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === slideIndex);
+      });
+    }
+    
+    function changeSlide(n) {
+      showSlide(slideIndex + n);
+    }
+    
+    function currentSlide(n) {
+      showSlide(n);
+    }
+    
+    // Auto-cycle the slides every 5 seconds.
+    setInterval(() => {
+      showSlide(slideIndex + 1);
+    }, 5000);
+    
+    // Initialize the carousel.
+    showSlide(slideIndex);
+  </script>
+  <script id="kunato_js-js" type="module" src="https://qx-cdn.sgp1.digitaloceanspaces.com/widget/jantaserishta/widget.js"></script>
+</body>
+</html>
